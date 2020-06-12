@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Splash from './screens/Splash';
 import SignIn  from './authentification/SignIn';
 import SignUp  from './authentification/SignUp';
+import HomeScreen  from './screens/Home';
+import { auth } from './data/firebaseConfig';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
 
 {/* Creat stack navigators*/}
 const Stack = createStackNavigator();
@@ -14,28 +15,22 @@ const StackHome = createStackNavigator();
 
 
 {/* Home stack navigator*/}
-function home() {
+function Home() {
   return(
-    <NavigationContainer>
       <StackHome.Navigator>
       
       <Stack.Screen 
-          name="Splash" 
-          component={Splash}
+          name="HomeScreen" 
+          component={HomeScreen}
           options={{ headerShown: false }} />
 
       </StackHome.Navigator>
-    </NavigationContainer>
   )
 }
 
-
-{/* Main Function */}
-export default function App() {
-
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
+function StackAuthentification(){
+  return(
+    <Stack.Navigator initialRouteName="Splash">
       
       <Stack.Screen 
           name="Splash" 
@@ -52,7 +47,36 @@ export default function App() {
           component={SignUp}
           options={{ headerShown: false }} />
 
-      </Stack.Navigator>
+    </Stack.Navigator>
+  )
+}
+
+
+{/* Main Function */}
+export default function App() {
+
+  const [user, setUser] = useState(false);
+
+  useEffect(() => {
+    
+    auth.onAuthStateChanged(user => {
+      console.log(user);
+      if (user) {
+        setUser(true)
+      }
+      else setUser(false)
+      
+    })
+  }, []);
+
+  return (
+    <NavigationContainer>
+      
+      
+    {
+      !user? <StackAuthentification/> : <Home/> 
+    }
+
     </NavigationContainer>
   );
 }
