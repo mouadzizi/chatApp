@@ -29,8 +29,8 @@ export default function Splash( {navigation} ) {
         
         <View style={GlobalStyle.footerSplashScreen}>
 
-            <Text style={GlobalStyle.splashTitle}> SecretChat  </Text>
-            <Text style={GlobalStyle.splashText}> SecretChat provide you secure chat with your partner </Text>
+            <Text style={GlobalStyle.splashTitle}> Shush  </Text>
+            <Text style={GlobalStyle.splashText}> Shush applications provide you secure chat with your partner </Text>
         
         </View>
 
@@ -48,8 +48,8 @@ export default function Splash( {navigation} ) {
         
         <View style={GlobalStyle.footerSplashScreen}>
 
-            <Text style={GlobalStyle.splashTitle}> SecretChat  </Text>
-            <Text style={GlobalStyle.splashText}> SecretChat provide you rooms to joing or to creat rooms for private chat </Text>
+            <Text style={GlobalStyle.splashTitle}> Shush  </Text>
+            <Text style={GlobalStyle.splashText}> Shush provide you rooms to joing or to creat rooms for private chat </Text>
         
     
     <View 

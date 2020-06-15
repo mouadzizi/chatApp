@@ -1,27 +1,22 @@
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {GlobalStyle} from '../style/GlobalStyle'
-
-import {auth} from '../data/firebaseConfig';
+import React, {useState} from 'react';
+import {View, Text, Image, Button, ScrollView} from 'react-native';
 
 export default function Home(){
 
-    function signOutUser() {
-        
-        auth.signOut()
-        .catch(err=>Alert.alert('Error',err.message))
-    }
+    
+
     return(
-        <View style={GlobalStyle.container}> 
-        <Text>Hello this is home </Text>
-        <TouchableOpacity
-        onPress={()=>signOutUser()}
-        style={{
-            margin:50,
-            backgroundColor:'#4898D3'
-        }}>
-            <Text>Sign Out</Text>
-        </TouchableOpacity>
+        
+        <ScrollView style={{backgroundColor: 'white'}}>
+        <View style={{flex : 1, backgroundColor:'white',}}> 
+            <View>
+                <Image
+                source={require("../assets/logo.jpg")}
+                style={{width:200, height:200, marginTop: 100 ,alignSelf: 'center'}}>
+                </Image>
+            </View>
+
         </View>
+        </ScrollView>
     )
 }

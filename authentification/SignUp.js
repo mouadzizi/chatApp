@@ -1,18 +1,14 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Alert, TouchableWithoutFeedback} from 'react-native';
-import {GlobalStyle} from '../style/GlobalStyle'
+import {View, Text, TouchableOpacity, Alert,Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {TextInput} from 'react-native-paper';
 
-import * as Animatable from 'react-native-animatable'
 import {auth} from '../data/firebaseConfig';
 
 
-export default function SignUp() {
+export default function SignUp({navigation}) {
 
-  const [userName,setUserName]=useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
 
   function CreatUser() {
     
@@ -27,13 +23,7 @@ export default function SignUp() {
     onPress={()=> Keyboard.dismiss()}>
     <View style={{padding: 25, backgroundColor:'white', flex:1}}>
 
-    <TextInput
-        label='UserName'
-        mode='outlined'
-        placeholder='e.g: CoolName'
-        theme={{colors: {primary: '#4898D3', background: '#fff' }}}
-        style={{marginTop: 50}}
-        onChangeText={text => setUserName(text)} />
+
 
     <TextInput
         label='Email'
