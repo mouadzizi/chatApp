@@ -15,7 +15,7 @@ export default function SignIn({navigation}) {
       auth.signInWithEmailAndPassword(email.trim(), password)
       .catch(error => {
         Alert.alert(error.message)
-      });
+      });      
     }
 
   return (
@@ -24,6 +24,7 @@ export default function SignIn({navigation}) {
     <View style={{padding: 25, backgroundColor:'white', flex:1}}>
     <TextInput
         label='Email'
+        keyboardType='email-address'
         mode='outlined'
         placeholder='e.g: yourMail@mail.com'
         theme={{colors: {primary: '#4898D3', background: '#fff' }}}

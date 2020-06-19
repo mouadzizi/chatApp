@@ -2,20 +2,27 @@ import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Alert,Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {TextInput} from 'react-native-paper';
 
-import {auth} from '../data/firebaseConfig';
+import {auth,db} from '../data/firebaseConfig';
 
 
 export default function SignUp({navigation}) {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [userName,setUserName]=useState("")
 
   function CreatUser() {
-    
     auth.createUserWithEmailAndPassword(email.trim(), password)
     .catch(error => {
       Alert.alert(error.message)
-    });
+    }).then(userInfo=>{
+      return userInfo.user.updateProfile({displayName:userName});
+    }).then(()=>{
+      db.ref('/user/'+auth.currentUser.uid+'/info').set({
+        username:userName,
+        email:auth.currentUser.email,
+      })
+    })
   }
 
   return (
@@ -23,10 +30,17 @@ export default function SignUp({navigation}) {
     onPress={()=> Keyboard.dismiss()}>
     <View style={{padding: 25, backgroundColor:'white', flex:1}}>
 
-
+    <TextInput
+        label='User name'
+        mode='outlined'
+        placeholder='user name'
+        theme={{colors: {primary: '#4898D3', background: '#fff' }}}
+        style={{marginTop: 25}}
+        onChangeText={name => setUserName(name)} />
 
     <TextInput
         label='Email'
+        keyboardType='email-address'
         mode='outlined'
         placeholder='e.g: yourMail@mail.com'
         theme={{colors: {primary: '#4898D3', background: '#fff' }}}

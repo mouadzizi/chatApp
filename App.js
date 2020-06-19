@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity,Text} from 'react-native';
 import Splash from './screens/Splash';
 import SignIn  from './authentification/SignIn';
 import SignUp  from './authentification/SignUp';
@@ -56,7 +56,20 @@ function  Container() {
             color='#fff'
             />
             </TouchableOpacity> ),
-        }}
+            headerRight:()=>(
+              <Text 
+                style={{color:'white',fontWeight:'bold',fontSize:18}}
+              > @{auth.currentUser.displayName} </Text>
+            ),
+            headerRightContainerStyle:{
+              paddingRight:8
+            }
+              
+  
+        }
+        
+      }
+      
         
        />
     </ContainerStack.Navigator>
@@ -119,7 +132,6 @@ export default function App() {
         setUser(true)
       }
       else setUser(false)
-      
     })
   }, []);
 
@@ -128,7 +140,7 @@ export default function App() {
       
       
     {
-      !user? <StackAuthentification/> : <Container/> 
+      user? <Container/> : <StackAuthentification/>
     }
 
     </NavigationContainer>

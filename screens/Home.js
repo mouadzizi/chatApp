@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import {View, Text, Image, Button, ScrollView} from 'react-native';
 
+import {auth} from '../data/firebaseConfig'
+
 export default function Home(){
-
-    
-
     return(
         
         <ScrollView style={{backgroundColor: 'white'}}>
