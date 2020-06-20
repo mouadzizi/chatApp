@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, ScrollView, Text, TouchableOpacity} from 'react-native';
 import { Searchbar, Avatar } from 'react-native-paper';
 
-export default function Home(){
+export default function Home({navigation}){
     const [searchQuery, SetsearchQuery] = useState("")
     return(
 
@@ -17,7 +17,7 @@ export default function Home(){
             
             <TouchableOpacity
             style={{margin: 20, flexDirection:"row", alignContent: 'space-around'}}
-            onPress={()=> navigation.navigate('')}>
+            onPress={()=> navigation.push('ChatScreen')}>
              <Avatar.Text size={50} label="XD" />
              <Text style={{fontWeight: 'bold', marginTop: 15, marginLeft: 5}}>Test 1</Text>
 

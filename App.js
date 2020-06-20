@@ -4,7 +4,8 @@ import {TouchableOpacity,Text} from 'react-native';
 import Splash from './screens/Splash';
 import SignIn  from './authentification/SignIn';
 import SignUp  from './authentification/SignUp';
-import HomeScreen  from './screens/Home';
+import HomeScreen1  from './screens/Home';
+import ChatScreen  from './screens/Chat';
 import FriendsScreen  from './screens/Friends';
 
 import { auth } from './data/firebaseConfig';
@@ -24,15 +25,31 @@ function signOutUser() {
         .catch(err=>Alert.alert('Error',err.message))
     }
 
+
 {/* Creat stack navigators*/}
 const Stack = createStackNavigator();
+const HomeStack = createStackNavigator();
 const ContainerStack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
+
+
+{/* HomeScreen  stack navigator*/}
+
+function HomeScreen(){
+  return(
+    
+    <HomeStack.Navigator initialRouteName="HomeScreen1" >
+    <HomeStack.Screen name="HomeScreen1" component={HomeScreen1}  options={{ headerShown: false }}/>
+    <HomeStack.Screen name="ChatScreen" component={ChatScreen} options={{ headerShown: false }}/>
+    </HomeStack.Navigator>
+  )
+}
 
 {/* Home stack navigator*/}
 function  Container() {
   return (
     <ContainerStack.Navigator initialRouteName="Home" >
+
       <ContainerStack.Screen name="Home" 
       component={Home}
       options={{
@@ -64,18 +81,16 @@ function  Container() {
               paddingRight:8
             }
               
-  
         }
         
       }
-      
-        
        />
+
     </ContainerStack.Navigator>
   );
 }
 
-{/* Home stack navigator*/}
+{/* Home Tap navigator*/}
 function Home() {
   return (
     <Tab.Navigator initialRouteName="HomeScreen" >
