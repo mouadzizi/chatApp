@@ -5,7 +5,6 @@ import Splash from './screens/Splash';
 import SignIn  from './authentification/SignIn';
 import SignUp  from './authentification/SignUp';
 import HomeScreen  from './screens/Home';
-import ChatScreen  from './screens/Chat';
 import FriendsScreen  from './screens/Friends';
 
 import { auth } from './data/firebaseConfig';
@@ -83,12 +82,12 @@ function Home() {
       <Tab.Screen name="HomeScreen" 
       component={HomeScreen}
       options={{
-          title: 'Page1',
+          title: 'DISC',
         }} />
       <Tab.Screen name="FriendsScreen" 
       component={FriendsScreen}
       options={{
-          title: 'Page2',
+          title: 'Find Friend',
         }} />
     </Tab.Navigator>
   );

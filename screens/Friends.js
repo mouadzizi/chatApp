@@ -1,11 +1,18 @@
-import * as React from 'react';
-import {View, Text} from 'react-native';
+import  React, {useState} from 'react';
+import {View, ScrollView} from 'react-native';
 import {GlobalStyle} from '../style/GlobalStyle';
+import { Searchbar } from 'react-native-paper';
 
 export default function Friends(){
-    return(
-    <View style={GlobalStyle.container}>
-        <Text>This is your friends page</Text>
+    const [searchQuery, SetsearchQuery] = useState("")
+    return( 
+    <ScrollView style={{backgroundColor: 'white'}}>
+    <View style={{flex : 1, backgroundColor:'white',}}> 
+    <Searchbar  style={{paddingTop: 15}}
+                placeholder="Search a friend by username"
+                onChangeText={text => SetsearchQuery(text)}
+                value={searchQuery}/>
     </View>
+    </ScrollView>
 
 )}

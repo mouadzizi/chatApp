@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Alert} from 'react-native';
-import {GlobalStyle} from '../style/GlobalStyle'
 import {TextInput} from 'react-native-paper';
 
-import * as Animatable from 'react-native-animatable'
 import {auth} from '../data/firebaseConfig';
 
 
