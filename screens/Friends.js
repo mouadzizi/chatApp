@@ -1,17 +1,23 @@
-import  React, {useState} from 'react';
-import {View, ScrollView} from 'react-native';
+import * as React from 'react';
+import {View, Text,TouchableOpacity} from 'react-native';
 import {GlobalStyle} from '../style/GlobalStyle';
-import { Searchbar } from 'react-native-paper';
+import { FontAwesome } from '@expo/vector-icons'; 
 
-export default function Friends(){
-    const [searchQuery, SetsearchQuery] = useState("")
-    return( 
-    <ScrollView style={{backgroundColor: 'white'}}>
-    <View style={{flex : 1, backgroundColor:'white',}}> 
-    <Searchbar  style={{paddingTop: 15}}
-                placeholder="Search a friend by username"
-                onChangeText={text => SetsearchQuery(text)}
-                value={searchQuery}/>
+
+export default function Friends({navigation}){
+    return(
+    <View style={GlobalStyle.container}>
+        <Text>This is your friends page</Text>
+        <TouchableOpacity style={{
+            alignItems:'center',justifyContent:'center',
+            width:90,height:90,
+            position:"absolute",bottom:10,right:20,
+            borderWidth:2,borderRadius:50,
+            backgroundColor:'white'}}
+            onPress={()=>navigation.push('search')}
+            >
+        <FontAwesome name="search" size={60} color="black" />
+        </TouchableOpacity>
     </View>
     </ScrollView>
 

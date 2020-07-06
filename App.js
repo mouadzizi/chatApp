@@ -7,6 +7,7 @@ import SignUp  from './authentification/SignUp';
 import HomeScreen1  from './screens/Home';
 import ChatScreen  from './screens/Chat';
 import FriendsScreen  from './screens/Friends';
+import Search from './screens/search';
 
 import { auth } from './data/firebaseConfig';
 
@@ -80,12 +81,26 @@ function  Container() {
             headerRightContainerStyle:{
               paddingRight:8
             }
-              
         }
         
       }
        />
-
+       <ContainerStack.Screen 
+             options={{
+              title: 'Search users',
+              headerTitleAlign: 'center',
+              headerStyle: {
+                backgroundColor: '#4898D3',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+             
+            }
+            
+          }
+       name='search' component={Search} />
     </ContainerStack.Navigator>
   );
 }
@@ -141,7 +156,7 @@ export default function App() {
   useEffect(() => {
     
     auth.onAuthStateChanged(user => {
-      console.log(user);
+      
       if (user) {
         setUser(true)
       }
