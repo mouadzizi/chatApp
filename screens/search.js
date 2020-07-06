@@ -1,8 +1,14 @@
-import React,{useEffect,useState} from 'react'
-import { StyleSheet, Text, View,ActivityIndicator,FlatList } from 'react-native';
-import {db,auth} from '../data/firebaseConfig'
+import React,{useEffect,useState} from 'react';
+import {View,ActivityIndicator,FlatList, Alert } from 'react-native';
+import { Searchbar, List, Divider} from 'react-native-paper';
+
+import {db,auth} from '../data/firebaseConfig';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function search() {
+
+    const [searchQuery, SetsearchQuery] = useState("");
+
     const[allUsers,setAllUsers]=useState([]);
     const currentUser=auth.currentUser;
     const[loading,setLoading]=useState(false);
@@ -30,18 +36,29 @@ export default function search() {
         })
        
     },[])
+
+
     return (
         <View>
-            <Text> Search Page </Text>
+        <Searchbar
+                style={{paddingTop: 15}}
+                placeholder="Find friend"
+                onChangeText={text => SetsearchQuery(text)}
+                value={searchQuery}/>
+        
             <ActivityIndicator size="large" color="#4898D3" animating={loading} />
+
             <FlatList 
                 data={allUsers}
-                renderItem={({item})=><Text> {item.name}</Text>}
-            />
+                renderItem={({item})=>  
+                <TouchableOpacity
+                onPress={console.log("you touched something! touch your dick instead u pervert !!!")}>
+                <List.Item
+                title= {item.name}         
+                description="your.email.com"
+                right={props => <List.Icon {...props} icon="plus" />} />
+                <Divider />
+                </TouchableOpacity>}/>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-
-})

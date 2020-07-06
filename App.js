@@ -87,7 +87,7 @@ function  Container() {
        />
        <ContainerStack.Screen 
              options={{
-              title: 'Search users',
+              title: 'Find a new friend',
               headerTitleAlign: 'center',
               headerStyle: {
                 backgroundColor: '#4898D3',
