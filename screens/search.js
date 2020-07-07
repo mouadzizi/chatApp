@@ -52,7 +52,7 @@ export default function search() {
         
         db.ref('user/'+key).once("value",(snapShot)=>{
             if(friends.includes(snapShot.val().info.username)) {
-                Alert.alert('Error','You cant add this user twice, are you gay?');
+                Alert.alert('Oups','You already friend with this person');
                 return;
             }
             else{

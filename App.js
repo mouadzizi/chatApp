@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import {TouchableOpacity,Text} from 'react-native';
+import {TouchableOpacity,Text, View} from 'react-native';
 import Splash from './screens/Splash';
 import SignIn  from './authentification/SignIn';
 import SignUp  from './authentification/SignUp';
@@ -10,13 +10,12 @@ import FriendsScreen  from './screens/Friends';
 import Search from './screens/search';
 
 import { auth } from './data/firebaseConfig';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { View } from 'react-native-animatable';
+
 
 
 
@@ -31,6 +30,7 @@ function signOutUser() {
 {/* Creat stack navigators*/}
 const Stack = createStackNavigator();
 const HomeStack = createStackNavigator();
+const FriendsStack = createStackNavigator();
 const ContainerStack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
@@ -46,6 +46,19 @@ function HomeScreen(){
     </HomeStack.Navigator>
   )
 }
+
+
+{/* FriendsStack  stack navigator*/}
+
+function FriendsScreenFun(){
+  return(
+    
+    <FriendsStack.Navigator initialRouteName="Friends" >
+    <FriendsStack.Screen name="Friends" component={FriendsScreen}  options={{ headerShown: false }}/>
+    </FriendsStack.Navigator>
+  )
+}
+
 
 {/* Home stack navigator*/}
 function  Container() {
@@ -86,46 +99,64 @@ function  Container() {
         
       }
        />
-       <ContainerStack.Screen 
-             options={{
-              title: 'Find a new friend',
-              headerTitleAlign: 'center',
-              headerStyle: {
-                backgroundColor: '#4898D3',
-              },
-              headerTintColor: '#fff',
-              headerTitleStyle: {
-                fontWeight: 'bold',
-              }, 
-            }
-          }
-       name='search' component={Search} />
-              <ContainerStack.Screen name='chat' component={ChatScreen}
-              options={({route,navigation})=> ({
-                
-                headerTitleAlign: 'center',
-                headerStyle: {
-                  backgroundColor: '#4898D3',
-                },
-                headerTintColor: '#fff',
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                },
-                headerLeft:()=>(
-                  <View style={{flexDirection:'row'}}>
-              <TouchableOpacity onPress={()=>navigation.goBack()}> 
-                      <Text> back </Text>
-                </TouchableOpacity>
-                    <Text style={{color:'white'}}> {route.params.item.name} </Text>
 
-                 </View>
-                  
-                )
-              }) }
-              />
+    <ContainerStack.Screen name="Search" component={Search} 
+    options={{
+          title: 'Find Friend',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#4898D3',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+    }}}/>
+    
+    <ContainerStack.Screen name="ChatScreen" component={ChatScreen}
+
+    options={({route,navigation})=> ({
+          title: '',
+          headerRight: () => (
+            <TouchableOpacity
+            onPress={()=> alert("call")}
+            style={{marginRight: 30}}>
+            <FontAwesome5
+            name='phone'
+            size={20}
+            color='#fff'
+            />
+            </TouchableOpacity>
+          ),
+          headerLeft: () => (
+            <View style={{flexDirection: "row"}}>
+            <TouchableOpacity
+            style={{marginLeft: 30}}
+            onPress={()=>navigation.goBack()}>
+            <FontAwesome5
+            name='arrow-left'
+            size={20}
+            color='#fff'
+            />
+            </TouchableOpacity>
+            <Text style={{marginLeft: 15, color: '#fff', fontWeight: "bold"}}> {route.params.item.name}  </Text>
+            </View>
+          ),
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#4898D3',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          }   
+        }) }
+
+    />
+    
     </ContainerStack.Navigator>
   );
 }
+
 
 {/* Home Tap navigator*/}
 function Home() {
@@ -136,16 +167,18 @@ function Home() {
       options={{
           title: 'DISC',
         }} />
-      <Tab.Screen name="FriendsScreen" 
-      component={FriendsScreen}
+
+      <Tab.Screen name="FriendsScreenFun" 
+      component={FriendsScreenFun}
       options={{
-          title: 'Find Friend',
+          title:'Friends',
         }} />
     </Tab.Navigator>
   );
 }
 
 
+{/* Authentification Stack  navigator*/}
 function StackAuthentification(){
   return(
     <Stack.Navigator initialRouteName="Splash">
