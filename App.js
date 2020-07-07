@@ -16,6 +16,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { View } from 'react-native-animatable';
 
 
 
@@ -95,12 +96,33 @@ function  Container() {
               headerTintColor: '#fff',
               headerTitleStyle: {
                 fontWeight: 'bold',
-              },
-             
+              }, 
             }
-            
           }
        name='search' component={Search} />
+              <ContainerStack.Screen name='chat' component={ChatScreen}
+              options={({route,navigation})=> ({
+                
+                headerTitleAlign: 'center',
+                headerStyle: {
+                  backgroundColor: '#4898D3',
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+                headerLeft:()=>(
+                  <View style={{flexDirection:'row'}}>
+              <TouchableOpacity onPress={()=>navigation.goBack()}> 
+                      <Text> back </Text>
+                </TouchableOpacity>
+                    <Text style={{color:'white'}}> {route.params.item.name} </Text>
+
+                 </View>
+                  
+                )
+              }) }
+              />
     </ContainerStack.Navigator>
   );
 }

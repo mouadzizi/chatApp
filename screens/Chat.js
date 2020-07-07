@@ -1,25 +1,22 @@
-import React, {useState} from 'react';
-import {Platform, KeyboardAvoidingView} from 'react-native';
+import React, {useState,useEffect} from 'react';
+import {Platform, KeyboardAvoiding,View,Text} from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function Chat(){
-
+export default function Chat({route}){
     const [msg, setMsg] = useState("")
     const [usr, setUsr] = useState("")
 
-    const chat = <GiftedChat messages = {msg} user={usr} />
+    const {item} = route.params;
 
-    if ( Platform.OS === 'android'){
-        return(
-            <KeyboardAvoidingView style={{flex : 1}} behavior="padding" keyboardVerticalOffset={3} enabled>
-                {chat}
-            </KeyboardAvoidingView>
-        )
-    }
+
+    useEffect(()=>{
+        console.log(item.name);
+        
+    },[])
     return(
-    <SafeAreaView style={{flex : 1}} >
-        {chat}
-    </SafeAreaView>
+    <View style={{flex : 1}} >
+        <GiftedChat  />
+    </View>
 
 )}

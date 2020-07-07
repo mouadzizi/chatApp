@@ -1,17 +1,15 @@
 import React,{useState,useEffect} from 'react';
-import {View, Text,FlatList} from 'react-native';
+import {View, Text,FlatList,TouchableOpacity} from 'react-native';
 import {GlobalStyle} from '../style/GlobalStyle';
-import { FAB } from 'react-native-paper';
+import { FAB, List } from 'react-native-paper';
 import {auth,db} from '../data/firebaseConfig'
 
 
 export default function Friends({navigation}){
     const uid=auth.currentUser.uid;
     const[friends,setFriends]=useState([])
-    useEffect(()=>{
-        console.log("friends pages" );
-        
-        db.ref('user/'+uid+'/friends').on('value',(snapShot)=>{
+    useEffect(()=>{        
+       var lis= db.ref('user/'+uid+'/friends').on('value',(snapShot)=>{
             let fr=[];
             snapShot.forEach((child)=>{
                 fr.push({
@@ -22,13 +20,25 @@ export default function Friends({navigation}){
             })
             setFriends(fr);
         })
-        return () => db.ref('value').off();
+        return () => db.ref('value').off('value',lis);
     },[]);
+
+    function handleTransition(item){
+        navigation.push('chat',{item})
+        
+    }
     return(
     <View style={GlobalStyle.container}>
         <FlatList 
+        style={{width:'97%',marginTop:10}}
            data={friends}
-           renderItem={({item})=><Text> {item.name} </Text>}
+           renderItem={({item})=>(
+           <TouchableOpacity
+           onPress={()=>handleTransition(item)}
+            style={{borderWidth:2,padding:10,marginVertical:2}}>
+           <Text> {item.name} </Text>
+           </TouchableOpacity>
+           )}
         />
         <FAB
         onPress={()=>navigation.push('search')}

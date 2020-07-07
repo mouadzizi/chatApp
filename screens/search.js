@@ -40,7 +40,7 @@ export default function search() {
             })
             setFriends(friends) 
         })
-     //return () => db.ref('value').off();
+     return () => db.ref('value').off();
     },[])
 
     function push(fr){
@@ -49,14 +49,18 @@ export default function search() {
     }
 
     function addFriend(key){
-        console.log(friends+" / "+friends.length);
+        
         db.ref('user/'+key).once("value",(snapShot)=>{
             if(friends.includes(snapShot.val().info.username)) {
                 Alert.alert('Error','You cant add this user twice, are you gay?');
                 return;
             }
             else{
-              push(snapShot.val().info);
+              push({
+                  uid:key,
+                  username:snapShot.val().info.username,
+                  email:snapShot.val().info.email
+              });
             }   
         })
     }
