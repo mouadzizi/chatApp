@@ -7,7 +7,6 @@ import SignUp  from './authentification/SignUp';
 import HomeScreen1  from './screens/Home';
 import ChatScreen  from './screens/Chat';
 import FriendsScreen  from './screens/Friends';
-import Search from './screens/search';
 
 import { auth } from './data/firebaseConfig';
 import { NavigationContainer } from '@react-navigation/native';
@@ -100,18 +99,7 @@ function  Container() {
       }
        />
 
-    <ContainerStack.Screen name="Search" component={Search} 
-    options={{
-          title: 'Find Friend',
-          headerTitleAlign: 'center',
-          headerStyle: {
-            backgroundColor: '#4898D3',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-    }}}/>
-    
+
     <ContainerStack.Screen name="ChatScreen" component={ChatScreen}
 
     options={({route,navigation})=> ({
@@ -128,17 +116,17 @@ function  Container() {
             </TouchableOpacity>
           ),
           headerLeft: () => (
-            <View style={{flexDirection: "row"}}>
+            <View style={{flexDirection: "row",alignItems:'center'}}>
             <TouchableOpacity
-            style={{marginLeft: 30}}
+            style={{marginLeft: 20}}
             onPress={()=>navigation.goBack()}>
             <FontAwesome5
             name='arrow-left'
-            size={20}
+            size={23}
             color='#fff'
             />
             </TouchableOpacity>
-            <Text style={{marginLeft: 15, color: '#fff', fontWeight: "bold"}}> {route.params.item.name}  </Text>
+            <Text style={{marginLeft: 15,fontSize:19, color: '#fff', fontWeight: "bold"}}> {route.params.item.name}  </Text>
             </View>
           ),
           headerTitleAlign: 'center',
@@ -150,9 +138,8 @@ function  Container() {
             fontWeight: 'bold',
           }   
         }) }
-
     />
-    
+
     </ContainerStack.Navigator>
   );
 }

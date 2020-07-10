@@ -1,64 +1,96 @@
-import React,{useState,useEffect} from 'react';
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
-import {GlobalStyle} from '../style/GlobalStyle';
-import { FAB, Avatar, Divider, List } from 'react-native-paper';
+import React,{useEffect,useState} from 'react';
+import {View,ActivityIndicator,FlatList, Alert } from 'react-native';
+import { Searchbar, List, Divider,Avatar } from 'react-native-paper';
 
-import {auth,db} from '../data/firebaseConfig'
+import {db,auth} from '../data/firebaseConfig';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function Friends({navigation}){
 
-    const uid=auth.currentUser.uid;
-    const[friends,setFriends]=useState([])
-    useEffect(()=>{        
-       var lis= db.ref('user/'+uid+'/friends').on('value',(snapShot)=>{
-            let fr=[];
-            snapShot.forEach((child)=>{
-                fr.push({
-                    key:child.key,
-                    name:child.val().username,
-                    email:child.val().email
-                });
+    const [searchQuery, SetsearchQuery] = useState("");
+
+    const[allUsers,setAllUsers]=useState([]);
+    const currentUser=auth.currentUser;
+    const[loading,setLoading]=useState(false);
+    const[friends,setFriends] = useState([]);
+    const [isFriend,setIsFirends]=useState(false);
+
+    useEffect(()=>{
+        //start loading
+        setLoading(true);
+        //fetch data from database
+        db.ref('user')
+        .once('value',(dataSnapShot)=>{
+            let users=[];
+            dataSnapShot.forEach((child)=>{
+                    if(currentUser.displayName!=child.val().info.username){
+                    users.push({
+                        key:child.key,
+                        name:child.val().info.username,
+                        email:child.val().info.email,
+                        isFriend:isFriend,
+                    })
+                }
             })
-            setFriends(fr);
+            setAllUsers(users);
+            setLoading(false); 
         })
-        return () => db.ref('value').off('value',lis);
-    },[]);
+        db.ref('user/'+currentUser.uid+'/friends').on('value',(snapShot)=>{
+            let friends=[];
+            snapShot.forEach((child)=>{
+                friends.push(child.val().username) 
+            })
+            setFriends(friends) 
+        })
+     return () => db.ref('value').off();
+    },[])
 
-    function handleTransition(item){
-        navigation.push('ChatScreen',{item})
-        
+    function push(fr){
+        db.ref('user/'+currentUser.uid+'/friends').push(fr)
+        .catch(err=>Alert.alert(err))
     }
-    return(
-    <View style={GlobalStyle.container}>
-        <FlatList 
-        style={{width:'97%',marginTop:10}}
-           data={friends}
-           renderItem={({item})=>(
-            <View>
-           <TouchableOpacity
-            style={{margin: 10, flexDirection:"row", alignContent: 'space-around'}}
-            onPress={()=> handleTransition(item)}>
 
-            <List.Item
-            left={props=><Avatar.Text {...props} color={'white'} size={45} 
-            label={item.name.charAt(0)}/>}
-            />
-            <Text style={{fontWeight: 'bold', marginTop: 15, marginLeft: 5}}>{item.name}</Text>
-            </TouchableOpacity>
-            <Divider />
-            </View>
-           )}
-        />
+    function addFriend(key){
+        db.ref('user/'+key).once("value",(snapShot)=>{
+            if(friends.includes(snapShot.val().info.username)) {
+                Alert.alert('Oups','You already friend with this person');
+                setIsFirends(true)
+                return;
+            }
+            else{
+              push({
+                  uid:key,
+                  username:snapShot.val().info.username,
+                  email:snapShot.val().info.email
+              });
+            }   
+        })
+    }
+
+    return (
+        <View>
+        <Searchbar
+                style={{paddingTop: 15}}
+                placeholder="Find friend"
+                onChangeText={text => SetsearchQuery(text)}
+                value={searchQuery}/>
+        
+            <ActivityIndicator size="large" color="#4898D3" animating={loading} />
+
+            <FlatList 
+                data={allUsers}
+                renderItem={({item})=>  
+                <TouchableOpacity
+                onPress={()=>addFriend(item.key)}>
+                <List.Item
+                left={props=><Avatar.Text {...props} color={'white'} size={50} 
+                label={item.name.charAt(0)}/>}
+                title= {item.name}         
+                description={item.email}
+                right={props => <List.Icon {...props}  icon= "plus" />} />
                 
-
-        <FAB
-        onPress={()=>navigation.push('Search')}
-        style={GlobalStyle.fab}
-        size={40}
-        color="#fff"
-        icon="account-search"
-        />
-
-    </View>
-
-)}
+                <Divider />
+                </TouchableOpacity>}/>
+        </View>
+    )
+}
