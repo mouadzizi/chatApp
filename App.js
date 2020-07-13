@@ -41,7 +41,6 @@ function HomeScreen(){
     
     <HomeStack.Navigator initialRouteName="HomeScreen1" >
     <HomeStack.Screen name="HomeScreen1" component={HomeScreen1}  options={{ headerShown: false }}/>
-    <HomeStack.Screen name="ChatScreen" component={ChatScreen} options={{ headerShown: false }}/>
     </HomeStack.Navigator>
   )
 }

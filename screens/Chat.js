@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, ActivityIndicator,Dimensions } from 'react-native';
+import { View, Image, ActivityIndicator,Dimensions } from 'react-native';
 import { GiftedChat, Send, Bubble } from 'react-native-gifted-chat';
 import { auth, db } from '../data/firebaseConfig';
 import firebase from 'firebase';
@@ -74,11 +74,17 @@ export default function Chat({ route }) {
 
 
   return (
-    <View style={{ flex: 1 }} >
+    <View style={{ flex: 1, backgroundColor: '#fff' }} >
       <View style={{alignItems:'center'}} > 
       <ActivityIndicator style={{position:'absolute'}} size='large' color='black' animating={loading} />
       </View>
-      {messages.length == 0 ?  <Text> Say hi to your new friend </Text> : null} 
+      {messages.length == 0 ?  <Image 
+      style={{  
+        width: 300,
+        height: 100,
+        alignSelf: 'center',
+        flex: 1,}}
+      source={require('../assets/slide2.jpg') }/> : null} 
       <GiftedChat
         
         renderBubble={props => {

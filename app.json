@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "HelloWorld",
+    "name": "Shush App",
     "slug": "chatApp",
     "platforms": [
       "ios",
@@ -8,8 +8,13 @@
       "web"
     ],
     "android": {
-      "package": "com.chatApp",
+      "package": "com.binarytech.ShushApp",
       "versionCode": 1
+    },
+    "ios": {
+      "bundleIdentifier": "com.yourcompany.yourappname",
+      "buildNumber": "1.0.0",
+      "supportsTablet": true
     },
     "version": "1.0.0",
     "orientation": "portrait",
@@ -25,8 +30,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
-    }
+
   }
 }

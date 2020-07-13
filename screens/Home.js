@@ -17,22 +17,6 @@ export default function Home({ navigation }) {
     
 
     useEffect(()=>{      
-        //test area 
-        /*msgs.on('value',snap=>{
-            var items=[];
-            snap.forEach(child=>{
-                if(child.key.includes(uid)) {
-                    child.forEach(child2=>{
-                        items.push({
-                            key:snap.key,
-                            guestUID:child2.val().guestUID,
-                            guestName:child2.val().guestName,  
-                        })
-                    })
-                }
-            })
-            setDisc(items)
-        })*/
         
 
         loadFrineds()

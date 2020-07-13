@@ -18,6 +18,7 @@ export default function Friends({navigation}){
     useEffect(()=>{
         //start loading
         setLoading(true);
+        
         //fetch data from database
         db.ref('user')
         .once('value',(dataSnapShot)=>{
